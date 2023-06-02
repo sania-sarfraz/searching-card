@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <title>Student Cards</title>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color:rgb(255, 136, 0);
+      color:white
+    }
+  </style>
+</head>
+<body>
+  <div class="search-box text-center mt-4">
+  <input type="text" id="searchInput" placeholder="Search by name or university">
+  <button><i class="fa-solid fa-magnifying-glass"></i></button>
+  </div>
+  <div class="center text-center mt-3">
+  <input type="checkbox" id="graduatedCheckbox" onchange="filterCards()"> Graduated
+  <input type="checkbox" id="inProgressCheckbox" onchange="filterCards()"> In Progress
+  <input type="checkbox" id="notGraduatedCheckbox" onchange="filterCards()"> Not Graduated
+  </div>
+
+  <div id="cardContainer"> </div>
+  
+
+  <script>
+    const DATA = [
+      { id: 0, 
+        name: "Subhan", 
+        status: "Graduated",
+         university: "GCUF"
+         },
+        
+      { 
+        id: 1,
+         name: "Rehan", 
+         status: "In Progress",
+          university: "GCUF" 
+        },
+
+        {
+           id: 2, 
+        name: "Sania", 
+        status: "In Progress",
+         university: "GCUF"
+         },
+
+         { 
+          id: 3, 
+        name: "Ayesha", 
+        status: "In Progress",
+         university: "Numl"
+         },
+
+         { 
+          id: 4, 
+        name: "Awais", 
+        status: "Not Graduated",
+         university: "N/A"
+         },
+         { 
+          id: 5, 
+        name: "Maryam", 
+        status: "Graduated",
+         university: "Nust"
+         },
+         { 
+          id: 4, 
+        name: "Iram", 
+        status: "In progress",
+         university: "Gcuf"
+         },
+    ];
+
+    function renderCards(){
+      const cardContainer=document.getElementById("cardContainer")
+      cardContainer.innerHTML=""
+      const searchInput=document.getElementById("searchInput").value.trim().toLowerCase();
+      const graduatedCheckbox=document.getElementById("graduatedCheckbox");
+      const inProgressCheckbox=document.getElementById("inProgressCheckbox");
+      const notGraduatedCheckbox=document.getElementById("notGraduatedCheckbox");
+
+      for(let i=0;i<DATA.length; i++){
+        const {id,name,status,university}=DATA[i];
+        if(
+          name.toLowerCase().includes(searchInput)||
+          university.toLowerCase().includes(searchInput)
+        ){
+        if(
+         ( graduatedCheckbox.checked &&status.toLowerCase()==="graduated")||
+         ( inProgressCheckbox.checked &&status.toLowerCase()==="in progress")||
+         ( notGraduatedCheckbox.checked &&status.toLowerCase()==="not graduated")
+        )
+        {
+          const card = document.createElement("div");
+            card.classList.add("card");
+          card.innerHTML=`
+          <h3>ID:${id}</h3>
+          <p>NAME:${name}</p>
+          <p>STATUS:${status}</p>
+          <p>UNIVERSITY:${university}</p>`;
+
+          cardContainer.appendChild(card);
+        }
+      }
+    }
+  }
+
+  function filterCards(){
+    renderCards();
+  }
+
+  document.getElementById("searchInput").addEventListener("input",renderCards);
+  document.getElementById("graduatedCheckbox").addEventListener("change",filterCards);
+  document.getElementById("inProgressCheckbox").addEventListener("change",filterCards);
+  document.getElementById("notGraduatedCheckbox").addEventListener("change",filterCards);
+
+  renderCards();
+
+    // function renderCards() {
+    //   const cardContainer = document.getElementById("cardContainer");
+    //   cardContainer.innerHTML = "";
+
+    //   const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+    //   const graduatedCheckbox = document.getElementById("graduatedCheckbox");
+    //   const inProgressCheckbox = document.getElementById("inProgressCheckbox");
+    //   const notGraduatedCheckbox = document.getElementById("notGraduatedCheckbox");
+
+    //   for (let i = 0; i < DATA.length; i++) {
+    //     const { id, name, status, university } = DATA[i];
+
+    //     // Filter based on search input
+    //     if (
+    //       name.toLowerCase().includes(searchInput) ||
+    //       university.toLowerCase().includes(searchInput)
+    //     ) {
+    //       // Filter based on checkboxes
+    //       if (
+    //         (graduatedCheckbox.checked && status.toLowerCase() === "graduated") ||
+    //         (inProgressCheckbox.checked && status.toLowerCase() === "in progress") ||
+    //         (notGraduatedCheckbox.checked && status.toLowerCase() === "not graduated")
+    //       ) {
+//  const card = document.createElement("div");
+//             card.classList.add("card");
+    //         card.innerHTML = `
+    //           <h3>ID: ${id}</h3>
+    //           <p>Name: ${name}</p>
+    //           <p>Status: ${status}</p>
+    //           <p>University: ${university}</p>
+    //         `;
+    //         cardContainer.appendChild(card);
+    //       }
+    //     }
+    //   }
+    // }
+
+    // function filterCards() {
+    //   renderCards();
+    // }
+
+    // document.getElementById("searchInput").addEventListener("input", renderCards);
+    // document.getElementById("graduatedCheckbox").addEventListener("change", filterCards);
+    // document.getElementById("inProgressCheckbox").addEventListener("change", filterCards);
+    // document.getElementById("notGraduatedCheckbox").addEventListener("change", filterCards);
+
+    // renderCards();
+  </script>
+</body>
+</html>
